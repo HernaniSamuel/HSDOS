@@ -1,24 +1,24 @@
+// don't use nothing from the user space
 #![no_std]
 #![no_main]
 
+// vga module to encapsulate unsafe
+mod vga_buffer;
+
+// Bring panic from core
 use core::panic::PanicInfo;
 
-static HAIL: &[u8] = b"Hail to King Terry the Terrible!";
-
+// This is how panic works on bare metal
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);    
     loop{}
 }
 
+// unsafe = trust me bro; No mangle = maintain the same name; write the string on boot.
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    let vga_buffer = 0xb8000 as *mut u8;
-    
-    for (i, &byte) in HAIL.iter().enumerate(){
-        unsafe {
-            *vga_buffer.offset(i as isize * 2) = byte;
-            *vga_buffer.offset(i as isize * 2 + 1) = 0xb;
-        }
-    }
-    loop {}
+    println!("Hail to King Terry the Terrible{}\n", "!");
+    panic!("PUTA QUE PARIU FODEU TUDO AQUI NESSE CARALHO!");   
+ loop {}
 }
