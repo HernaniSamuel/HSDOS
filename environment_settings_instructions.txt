@@ -1,3 +1,4 @@
+I made it based on https://os.phil-opp.com/ so its the same process to set rust environment
 sudo dnf install qemu nasm xorriso curl
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
