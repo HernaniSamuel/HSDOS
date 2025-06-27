@@ -1,0 +1,12 @@
+sudo dnf install qemu nasm xorriso curl
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
+git clone https://github.com/seu-usuario/HSDOS.git
+cd HSDOS
+rustup override set nightly
+rustup component add rust-src --toolchain nightly
+rustup component add llvm-tools-preview --toolchain nightly
+rustup target add x86_64-unknown-none
+cargo install bootimage
+cargo bootimage
+
